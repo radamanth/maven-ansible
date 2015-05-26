@@ -1,0 +1,27 @@
+---
+
+- debug: var=mvn_url
+
+- name: download maven tar ball
+  get_url: url={{mvn_url}} dest="~/mvn.tar.gz"
+
+- name: create dest dir and ensure rights 
+  file: path="{{mvn_destdir}}" mode="{{mvn_file_mode}}"  owner="{{mvn_owner}}" group="{{mvn_group}}" state="directory" recurse=yes
+
+- name: unarchive mvn 
+  command: "tar -xvzf ~/mvn.tar.gz -C {{mvn_destdir}}" 
+
+- name: ensure rights are ok in  destination directory  {{mvn.destdir}}
+  file: path="{{mvn_destdir}}" mode="{{mvn_file_mode}}"  owner="{{mvn_owner}}" group="{{mvn_group}}" state="directory" recurse=yes
+
+- name: modify etc environment
+  lineinfile:  dest="/etc/environment"  line='{{item}}'
+  with_items:
+  - 'M2_HOME="/usr/local/apache-maven/apache-maven-{{mvn_version}}"'
+  - 'M2="/usr/local/apache-maven/apache-maven-{{mvn_version}}/bin"'
+
+- name: set maven extra_path
+  set_fact: mvn_extra_path="/usr/local/apache-maven/apache-maven-{{mvn_version}}/bin"
+  
+- name: add {{mvn_extra_path}}  to path
+  lineinfile: dest=/etc/environment state=present backrefs=yes regexp='PATH=(["]*)((?!.*?{{mvn_extra_path}}).*?)(["]*)$' line="PATH=\1\2:{{mvn_extra_path}}\3"

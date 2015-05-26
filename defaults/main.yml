@@ -1,0 +1,15 @@
+---
+# Maven version to install
+mvn_version: "3.3.3"
+# Where to find the package
+mvn_url: "http://wwwftp.ciril.fr/pub/apache/maven/maven-3/{{mvn_version}}/binaries/apache-maven-{{mvn_version}}-bin.tar.gz"
+# Maven directory owner username
+mvn_owner: "mvnuser"
+# Maven directory owner group
+mvn_group: "mvn"
+# Maven installation directory
+mvn_destdir: "/usr/local/apache-maven"
+# Mavend installation directory filemode
+mvn_file_mode: "0775"
+
+

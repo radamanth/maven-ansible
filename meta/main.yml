@@ -1,0 +1,16 @@
+---
+galaxy_info:
+  author: Tony Deboschère 
+  description: Small ansible role designed to install oracle java and maven  on an ubuntu server 
+  company: www.neovia.fr
+  license: GPLv2
+  min_ansible_version: 1.4
+  platforms:
+  - name: Ubuntu
+    versions:
+    - trusty
+  categories:
+  - development
+dependencies: 
+  - { role: 'radamanth.java-oracle-ansible', version: '1.0.0'  }
+  
